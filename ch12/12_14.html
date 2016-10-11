@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>Sample 12.14</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+	<div align="center">
+		<p>Click a link to move to a new page:</p>
+		<a href="sample12_14.html?page=content1.html">Content 1</a><br />
+		<a href="sample12_14.html?page=content2.html">Content 2</a><br />
+		<a href="sample12_14.html?page=content3.html">Content 3</a><br />
+		<?php
+			//The first thing we do is decode, remove slashes and trim the incoming value.
+			$page = trim (urldecode (stripslashes ($_GET['page'])));
+			//First, we see if there is a page.
+			if (isset ($page) && $page != ""){
+				//Now, we determine if this is a valid page.
+				if (is_file ($page)){
+					require_once ($page);
+				} else {
+					echo "<p>Sorry, the page you have requested does not exist.</p>";
+				}
+			}
+		?>
+	</div>
+</body>
+</html>

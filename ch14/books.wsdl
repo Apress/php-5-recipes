@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- Example books.wsdl -->
+<definitions name="MyBookSearch"
+             targetNamespace="urn:MyBookSearch"
+             xmlns:typens="urn:MyBookSearch"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" 
+                targetNamespace="urn:MyBookSearch">
+
+      <xsd:complexType name="MyBookSearchResponse">
+        <xsd:all>
+          <xsd:element name="bookTitle"                   type="xsd:string"/>
+          <xsd:element name="bookYear"                    type="xsd:int"/>
+          <xsd:element name="bookAuthor"                  type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </types> 
+
+  <message name="doMyBookSearch">
+    <part name="bookTitle"         type="xsd:string"/>
+  </message>
+
+  <message name="doMyBookSearchResponse">
+    <part name="return"         type="typens:MyBookSearchResponse"/>           
+  </message>
+  
+  <portType name="MyBookSearchPort">
+    <operation name="doMyBookSearch">
+      <input message="typens:doMyBookSearch"/>
+      <output message="typens:doMyBookSearchResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="MyBookSearchBinding" type="typens:MyBookSearchPort">
+    <soap:binding style="rpc"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="doMyBookSearch">
+      <soap:operation soapAction="urn:MyBookSearchAction"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:MyBookSearch"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:MyBookSearch"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="MyBookSearchService">
+    <port name="MyBookSearchPort" binding="typens:MyBookSearchBinding">
+      <soap:address location="http://localhost/php5/14-8-4.php"/>
+    </port>
+  </service>  
+</definitions>

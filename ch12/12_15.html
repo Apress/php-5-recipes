@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>Sample 12.15</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<?php
+	class someclass {
+		protected $someval;
+		
+		public function setsomeval ($newval){
+			$this->someval = $newval;
+		}
+		
+		public function getsomeval (){
+			return $this->someval;
+		}
+	}
+	
+	$myclass = new someclass ();
+	$myclass->setsomeval ("Hello World!");
+	
+	$myarray = array();
+	$myarray[0] = "Hello";
+	$myarray[1] = "World!";
+	
+	$myarray = serialize ($myarray);
+	$myarray = urlencode ($myarray);
+	
+	$myclass = serialize ($myclass);
+	$myclass = urlencode ($myclass);
+?>
+</head>
+<body>
+	<div align="center">
+		<a href="sample12_15.html?passedarray=<?php echo $myarray; ?>&amp;passedclass=<?php echo $myclass; ?>">Output Current Value</a><br />
+		<?php
+			if (isset ($_GET['passedclass']) && isset ($_GET['passedarray'])){
+				
+				$newclass = new someclass;
+				$newclass = $_GET['passedclass'];
+				$newclass = stripslashes ($newclass);
+				$newclass = unserialize ($newclass);
+				echo "Object: " . $newclass->getsomeval() . "<br />";
+				
+				$newarray = array ();
+				$newarray = $_GET['passedarray'];
+				$newarray = stripslashes ($newarray);
+				$newarray = unserialize ($newarray);
+				print_r ($newarray);
+			}
+		?>
+	</div>
+</body>
+</html>

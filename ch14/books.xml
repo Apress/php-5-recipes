@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<!-- example books.xml -->
+<books>
+  <book book_id="1">
+    <title>PHP 5 Recipes</title>
+  </book>
+  <book book_id="2">
+    <title>PHP Pocket Reference</title>
+  </book>
+</books>
